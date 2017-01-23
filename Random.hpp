@@ -9,9 +9,14 @@ class Random {
     std::uniform_real_distribution<> dis;
 
 public:
+	float min, max;
+
 	Random(float, float);
 	Random();
+	Random(Random&&);
 	
+	Random& operator=(Random&&);
+
 	void setRange(float, float);
 
 	float operator()();

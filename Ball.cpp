@@ -6,6 +6,7 @@ Ball::Ball(Vec2 startPos, bool startImmediately) {
 	Ball::radius = 9.0;
 	Ball::isDead = false;
 	Ball::startTimeoutSeconds = (startImmediately ? 0.0 : 0.75);
+	Ball::hasStarted = false;
 	Ball::sizeMult = 1.0;
 	float angle = rand() % 360;
 	Ball::setAngle(angle);
@@ -90,6 +91,11 @@ void Ball::update() {
 		return;
 	}
 
+	if (!Ball::hasStarted) {
+		Ball::hasStarted = true;
+
+	}
+
 	/* Update position */
 	Ball::shape.setRotation(Ball::dir.angle(Vec2(0.0, 0.0)));
 	Ball::dir.length(Ball::speed);
@@ -100,11 +106,16 @@ void Ball::update() {
 	} else {
 		Ball::sizeMult = 1.0;
 	}
+}
 
-	if (Ball::pos.x < 0.0 || Ball::pos.y < 0.0 || Ball::pos.x > 800.0 || Ball::pos.y > 800.0) {
+bool Ball::checkScored(Background &background, float sizex, float sizey) {
+	if (Ball::pos.x < 0.0 || Ball::pos.y < 0.0 || Ball::pos.x > sizex || Ball::pos.y > sizey) {
 		Ball::isDead = true;
-		return;
+		background.flash(Player::colorOf(Ball::owner));
+		return true;
 	}
+
+	return false;
 }
 
 void Ball::draw(sf::RenderWindow &window) {

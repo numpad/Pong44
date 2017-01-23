@@ -8,6 +8,25 @@ ParticleFuel::ParticleFuel() {
 	ParticleFuel::rnd_vely.setRange(0, 1);
 }
 
+ParticleFuel::ParticleFuel(ParticleFuel &&pfuel) {
+	ParticleFuel::colors = pfuel.colors;
+	ParticleFuel::rnd_colorpicker.setRange(pfuel.rnd_colorpicker.min, pfuel.rnd_colorpicker.max);
+	ParticleFuel::rnd_size.setRange(pfuel.rnd_size.min, pfuel.rnd_size.max);
+	ParticleFuel::rnd_velx.setRange(pfuel.rnd_velx.min, pfuel.rnd_velx.max);
+	ParticleFuel::rnd_vely.setRange(pfuel.rnd_vely.min, pfuel.rnd_vely.max);
+}
+
+ParticleFuel& ParticleFuel::operator=(ParticleFuel &&pfuel) {
+
+	ParticleFuel::colors = pfuel.colors;
+	ParticleFuel::rnd_colorpicker = Random(pfuel.rnd_colorpicker.min, pfuel.rnd_colorpicker.max);
+	ParticleFuel::rnd_size = Random(pfuel.rnd_size.min, pfuel.rnd_size.max);
+	ParticleFuel::rnd_velx = Random(pfuel.rnd_velx.min, pfuel.rnd_velx.max);
+	ParticleFuel::rnd_vely = Random(pfuel.rnd_vely.min, pfuel.rnd_vely.max);
+
+	return *this;
+}
+
 void ParticleFuel::setVelocity(Vec2 min, Vec2 max) {
 	ParticleFuel::rnd_velx.setRange(min.x, max.x);
 	ParticleFuel::rnd_vely.setRange(min.y, max.y);

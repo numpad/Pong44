@@ -5,7 +5,7 @@ Background::Background() : Background(sf::Color(33, 33, 33)) {
 
 Background::Background(sf::Color bgColor) {
 	Background::flashTime = 0.0;
-	Background::flashTimeMax = 30.0;
+	Background::flashTimeMax = 23.0;
 
 	Background::background = bgColor;
 }

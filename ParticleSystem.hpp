@@ -11,7 +11,6 @@ class ParticleSystem {
 
 	Vec2 position, gravity;
 	std::vector<Particle> particles;
-	
 	sf::RectangleShape particleShape;
 
 public:

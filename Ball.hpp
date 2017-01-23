@@ -1,9 +1,11 @@
 #ifndef BALL_HPP
 #define BALL_HPP
 
+#include "Background.hpp"
 #include "Player.hpp"
 #include "Paddle.hpp"
 #include "ParticleSystem.hpp"
+#include "Random.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -21,8 +23,10 @@ class Ball {
 
 	ParticleSystem psystem;
 
-	bool isDead;
+	bool isDead, hasStarted;
+	
 public:
+	
 	Vec2 pos;
 
 	Ball(Vec2, bool);
@@ -34,6 +38,8 @@ public:
 
 	bool collides(Paddle&);
 	void collide(std::vector<Paddle>&);
+
+	bool checkScored(Background&, float, float);
 	void update();
 	void draw(sf::RenderWindow&);
 

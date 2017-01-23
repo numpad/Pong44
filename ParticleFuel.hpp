@@ -16,6 +16,9 @@ class ParticleFuel {
 public:
 	
 	ParticleFuel();
+	ParticleFuel(ParticleFuel&&);
+
+	ParticleFuel& operator=(ParticleFuel&&);
 
 	void setVelocity(Vec2, Vec2);
 	void setSize(float, float);

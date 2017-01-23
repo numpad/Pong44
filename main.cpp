@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
 		for (size_t i = 0; i < balls.size(); ++i) {
 			balls.at(i).update();
 			balls.at(i).collide(paddles);
+			balls.at(i).checkScored(background, 800.0, 800.0);
 			balls.at(i).draw(window);
 		}
 
