@@ -44,7 +44,8 @@ int main(int argc, char *argv[]) {
 	paddles.push_back(Paddle(player2));
 	paddles.push_back(Paddle(player3));
 	paddles.push_back(Paddle(player4));
-
+	
+	sf::Clock ballSpawner;
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -61,6 +62,10 @@ int main(int argc, char *argv[]) {
 			window.close();
 
 		/* Update */
+		if (ballSpawner.getElapsedTime().asSeconds() > 1.0) {
+			ballSpawner.restart();
+			balls.push_back(Ball(Vec2(400.0, 400.0), false, 1.0));
+		}
 		if (balls.empty()) {
 			balls.push_back(Ball(Vec2(400.0, 400.0)));
 		}

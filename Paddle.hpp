@@ -14,6 +14,7 @@ class Paddle {
 	sf::RectangleShape shape;
 
 public:
+	ParticleFuel pfuel;
 	Vec2 pos, size;
 
 	Paddle(Player&);

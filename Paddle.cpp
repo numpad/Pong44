@@ -1,7 +1,7 @@
 #include "Paddle.hpp"
 
 Paddle::Paddle(Player &player) : player(player) {
-	Paddle::maxSpeed = 11.65;
+	Paddle::maxSpeed = 13.85;
 	Paddle::acceleration = 0.89;
 
 	Paddle::pos = Vec2(400 + 370 * player.getSide().x, 400 + 370 * player.getSide().y);
@@ -9,7 +9,7 @@ Paddle::Paddle(Player &player) : player(player) {
 	Paddle::acc = Vec2(Paddle::acceleration) * player.getSide().abs().swap();
 
 	float length = 170.0,
-		  width = 34.0;
+		  width  =  30.0;
 	Paddle::size = Paddle::player.getSide().x != 0 ? Vec2(width, length) : Vec2(length, width);
 
 	/* Shape */
@@ -17,6 +17,18 @@ Paddle::Paddle(Player &player) : player(player) {
 	Paddle::shape.setFillColor(Paddle::player.getColor());
 	Paddle::shape.setOrigin(Paddle::size.x / 2.0, Paddle::size.y / 2.0);
 	Paddle::shape.setPosition(Paddle::pos.x, Paddle::pos.y);
+
+	/* ParticleFuel */
+	const float sidex = Paddle::player.getSide().x;
+	const float sidey = Paddle::player.getSide().y;
+	float angle = 90.0 * ((sidex + 2 * sidex) + (sidey + 1 * fabs(sidey)));
+	Paddle::pfuel.setAngle(angle, 180.0);
+	Paddle::pfuel.setVelocity(0.0, 7.0);
+	Paddle::pfuel.setSize(1.0, 4.0);
+	Paddle::pfuel.addColor(Paddle::player.getColor());
+	Paddle::pfuel.addColor(Paddle::player.getColor() * sf::Color(220, 220, 220));
+	Paddle::pfuel.addColor(Paddle::player.getColor() * sf::Color(100, 100, 100));
+	
 }
 
 void Paddle::block() {

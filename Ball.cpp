@@ -1,11 +1,11 @@
 #include "Ball.hpp"
 
-Ball::Ball(Vec2 startPos, bool startImmediately) {
+Ball::Ball(Vec2 startPos, bool startImmediately, float timeoutSeconds) {
 	Ball::pos = startPos;
-	Ball::speed = 6.25;
+	Ball::speed = 7.75;
 	Ball::radius = 9.0;
 	Ball::isDead = false;
-	Ball::startTimeoutSeconds = (startImmediately ? 0.0 : 0.75);
+	Ball::startTimeoutSeconds = (startImmediately ? 0.0 : timeoutSeconds);
 	Ball::hasStarted = false;
 	Ball::sizeMult = 1.0;
 	float angle = rand() % 360;
@@ -79,6 +79,9 @@ void Ball::collide(std::vector<Paddle> &paddles) {
 			if (fabs(sidey)) {
 				Ball::dir.y = fabs(Ball::dir.y) * -sidey;
 			}
+
+			/* Add juicy particles */
+			Ball::psystem.fuel(paddles.at(i).pfuel, 30);
 		}
 	}
 }
@@ -94,6 +97,15 @@ void Ball::update() {
 	if (!Ball::hasStarted) {
 		Ball::hasStarted = true;
 
+		ParticleFuel pfuel;
+		pfuel.setAngle(0.0, 360.0);
+		pfuel.setVelocity(1.0, 5.0);
+		pfuel.setSize(1.0, 4.0);
+		pfuel.setDrag(0.935, 0.965);
+		pfuel.setColor(Player::colorOf(Player::PLAYER_NONE));
+		psystem.setPosition(Ball::pos);
+
+		Ball::psystem.fuel(pfuel, 70);
 	}
 
 	/* Update position */
@@ -106,6 +118,10 @@ void Ball::update() {
 	} else {
 		Ball::sizeMult = 1.0;
 	}
+
+	/* Update ParticleSystem */
+	Ball::psystem.setPosition(Ball::pos);
+	Ball::psystem.update();
 }
 
 bool Ball::checkScored(Background &background, float sizex, float sizey) {
@@ -123,6 +139,7 @@ void Ball::draw(sf::RenderWindow &window) {
 	Ball::shape.setScale(Ball::sizeMult, Ball::sizeMult);
 	
 	window.draw(Ball::shape);
+	Ball::psystem.draw(window);
 }
 
 Player::ID Ball::getOwner() { 

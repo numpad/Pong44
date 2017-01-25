@@ -2,6 +2,7 @@
 #define PARTICLE_SYSTEM_HPP
 
 #include "Vec2.hpp"
+#include "Random.hpp"
 #include "Particle.hpp"
 #include "ParticleFuel.hpp"
 #include <SFML/Graphics.hpp>
@@ -12,7 +13,7 @@ class ParticleSystem {
 	Vec2 position, gravity;
 	std::vector<Particle> particles;
 	sf::RectangleShape particleShape;
-
+	
 public:
 
 	ParticleSystem();

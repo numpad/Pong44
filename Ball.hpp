@@ -22,14 +22,13 @@ class Ball {
 	float startTimeoutSeconds;
 
 	ParticleSystem psystem;
-
-	bool isDead, hasStarted;
 	
+	bool isDead, hasStarted;
 public:
 	
 	Vec2 pos;
 
-	Ball(Vec2, bool);
+	Ball(Vec2, bool, float timeoutSeconds = 0.75);
 	Ball(Vec2);
 
 	void setAngle(float);
