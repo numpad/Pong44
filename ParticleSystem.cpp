@@ -50,6 +50,7 @@ void ParticleSystem::draw(sf::RenderWindow &window) {
 		ParticleSystem::particleShape.setOrigin(sf::Vector2f(p.size / 2.0, p.size / 2.0));
 		ParticleSystem::particleShape.setPosition(p.pos.x, p.pos.y);
 		ParticleSystem::particleShape.setFillColor(p.color);
+		//ParticleSystem::particleShape.rotate(p.vel.length() * 0.2);
 		
 		window.draw(ParticleSystem::particleShape);
 	}

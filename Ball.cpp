@@ -8,7 +8,8 @@ Ball::Ball(Vec2 startPos, bool startImmediately, float timeoutSeconds) {
 	Ball::startTimeoutSeconds = (startImmediately ? 0.0 : timeoutSeconds);
 	Ball::hasStarted = false;
 	Ball::sizeMult = 1.0;
-	float angle = rand() % 360;
+	Random angleRandomizer(0.0, 360.0);
+	float angle = angleRandomizer();
 	Ball::setAngle(angle);
 
 	Ball::owner = Player::PLAYER_NONE;
@@ -98,10 +99,12 @@ void Ball::update() {
 		Ball::hasStarted = true;
 
 		ParticleFuel pfuel;
-		pfuel.setAngle(0.0, 360.0);
+		float angle = -Ball::dir.angle() + 90.0;
+
+		pfuel.setAngle(angle, 45.0);
 		pfuel.setVelocity(1.0, 5.0);
-		pfuel.setSize(1.0, 4.0);
-		pfuel.setDrag(0.935, 0.965);
+		pfuel.setSize(1.0, 5.0);
+		pfuel.setDrag(0.935, 0.95);
 		pfuel.setColor(Player::colorOf(Player::PLAYER_NONE));
 		psystem.setPosition(Ball::pos);
 
@@ -109,7 +112,7 @@ void Ball::update() {
 	}
 
 	/* Update position */
-	Ball::shape.setRotation(Ball::dir.angle(Vec2(0.0, 0.0)));
+	Ball::shape.setRotation(Ball::dir.angle());
 	Ball::dir.length(Ball::speed);
 	Ball::pos += Ball::dir;
 

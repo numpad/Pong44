@@ -14,8 +14,6 @@
 #include <vector>
 
 int main(int argc, char *argv[]) {
-	srand(time(NULL));
-
 	sf::RenderWindow window(sf::VideoMode(800, 800), "Pong for four", sf::Style::Titlebar | sf::Style::Close);
 	window.setVerticalSyncEnabled(true);
 
@@ -45,6 +43,9 @@ int main(int argc, char *argv[]) {
 	paddles.push_back(Paddle(player3));
 	paddles.push_back(Paddle(player4));
 	
+	sf::View screenView(sf::Vector2f(400.0, 400.0), sf::Vector2f(800.0, 800.0));
+	window.setView(screenView);
+
 	sf::Clock ballSpawner;
 	while (window.isOpen()) {
 		sf::Event event;
@@ -60,15 +61,16 @@ int main(int argc, char *argv[]) {
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			window.close();
-
+		
 		/* Update */
-		if (ballSpawner.getElapsedTime().asSeconds() > 1.0) {
+		if (ballSpawner.getElapsedTime().asSeconds() > 3.0) {
 			ballSpawner.restart();
 			balls.push_back(Ball(Vec2(400.0, 400.0), false, 1.0));
 		}
 		if (balls.empty()) {
 			balls.push_back(Ball(Vec2(400.0, 400.0)));
 		}
+
 		for (size_t i = 0; i < balls.size(); ++i) {
 			if (balls.at(i).removable()) {
 				balls.erase(balls.begin() + i);
@@ -76,6 +78,8 @@ int main(int argc, char *argv[]) {
 		}
 
 		/* Rendering */
+		window.setView(screenView);
+
 		background.draw(window);
 
 		for (size_t i = 0; i < paddles.size(); ++i) {
