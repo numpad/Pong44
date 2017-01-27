@@ -10,12 +10,14 @@
 #include "Obstacles.hpp"
 #include "Ball.hpp"
 #include "Random.hpp"
+#include "Item.hpp"
 
 #include <vector>
 
 int main(int argc, char *argv[]) {
 	sf::RenderWindow window(sf::VideoMode(800, 800), "Pong for four", sf::Style::Titlebar | sf::Style::Close);
 	window.setVerticalSyncEnabled(true);
+	//window.setFramerateLimit(60);
 
 	/* Background color */
 	Background background;
@@ -45,6 +47,8 @@ int main(int argc, char *argv[]) {
 	
 	sf::View screenView(sf::Vector2f(400.0, 400.0), sf::Vector2f(800.0, 800.0));
 	window.setView(screenView);
+
+	Item item(Vec2(400.0, 400.0));
 
 	sf::Clock ballSpawner;
 	while (window.isOpen()) {
@@ -86,6 +90,8 @@ int main(int argc, char *argv[]) {
 			paddles.at(i).update();
 			paddles.at(i).draw(window);
 		}
+
+		item.draw(window);
 
 		for (size_t i = 0; i < balls.size(); ++i) {
 			balls.at(i).update();
