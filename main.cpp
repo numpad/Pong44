@@ -26,17 +26,13 @@ int main(int argc, char *argv[]) {
 	std::vector<Ball> balls = std::vector<Ball>();
 
 	/* Players and Paddles */
-	Player player1(Player::PLAYER_1);
-	Player player2(Player::PLAYER_2);
-	Player player3(Player::PLAYER_3);
-	Player player4(Player::PLAYER_4);
-	player1.setSide(-1, 0);
+	Player player1(Player::PLAYER_1, Player::SIDE_LEFT);
+	Player player2(Player::PLAYER_2, Player::SIDE_TOP);
+	Player player3(Player::PLAYER_3, Player::SIDE_RIGHT);
+	Player player4(Player::PLAYER_4, Player::SIDE_BOTTOM);
 	player1.setKeys(sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::A);
-	player2.setSide(0, -1);
 	player2.setKeys(sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Up);
-	player3.setSide(1, 0);
 	player3.setKeys(sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::L);
-	player4.setSide(0, 1);
 	player4.setKeys(sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::G);
 
 	std::vector<Paddle> paddles = std::vector<Paddle>();
@@ -48,7 +44,7 @@ int main(int argc, char *argv[]) {
 	sf::View screenView(sf::Vector2f(400.0, 400.0), sf::Vector2f(800.0, 800.0));
 	window.setView(screenView);
 
-	Item item(Vec2(400.0, 400.0));
+	Item item(Vec2(270.0, 590.0));
 
 	sf::Clock ballSpawner;
 	while (window.isOpen()) {
@@ -62,10 +58,11 @@ int main(int argc, char *argv[]) {
 					break;
 			};
 		}
+		Vec2 mouse = Vec2(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			window.close();
-		
+
 		/* Update */
 		if (ballSpawner.getElapsedTime().asSeconds() > 3.0) {
 			ballSpawner.restart();
@@ -80,6 +77,7 @@ int main(int argc, char *argv[]) {
 				balls.erase(balls.begin() + i);
 			}
 		}
+		item.intersect(balls);
 
 		/* Rendering */
 		window.setView(screenView);

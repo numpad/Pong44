@@ -1,11 +1,28 @@
 #include "Player.hpp"
 
 
-Player::Player(Player::ID id) {
+Player::Player(Player::ID id, Player::SIDE side) {
 	Player::id = id;
 	Player::side = Vec2(0.0, 0.0);
 	Player::color = Player::colorOf(id);
-	
+	Player::setSide(side);
+}
+
+void Player::setSide(Player::SIDE side) {
+	switch (side) {
+		case Player::SIDE_TOP:
+			Player::setSide(0, -1);
+			break;
+		case Player::SIDE_BOTTOM:
+			Player::setSide(0, 1);
+			break;
+		case Player::SIDE_LEFT:
+			Player::setSide(-1, 0);
+			break;
+		case Player::SIDE_RIGHT:
+			Player::setSide(1, 0);
+			break;
+	};
 }
 
 void Player::setSide(int left_or_right, int up_or_down) {

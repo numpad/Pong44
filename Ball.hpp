@@ -16,7 +16,7 @@ class Ball {
 	Player::ID owner;
 
 	sf::RectangleShape shape;
-	float radius, sizeMult;
+	float sizeMult;
 
 	sf::Clock aliveFor;
 	float startTimeoutSeconds;
@@ -25,7 +25,7 @@ class Ball {
 	
 	bool isDead, hasStarted;
 public:
-	
+	float radius;
 	Vec2 pos;
 
 	Ball(Vec2, bool, float timeoutSeconds = 0.75);

@@ -14,8 +14,14 @@ public:
 		PLAYER_1, PLAYER_2, PLAYER_3, PLAYER_4
 	};
 
-	Player(ID);
+	enum SIDE {
+		SIDE_TOP, SIDE_BOTTOM,
+		SIDE_LEFT, SIDE_RIGHT
+	};
 
+	Player(ID, SIDE);
+
+	void setSide(SIDE);
 	void setSide(int, int);
 	void setColor(sf::Color);
 	void setKeys(sf::Keyboard::Key, sf::Keyboard::Key, sf::Keyboard::Key);
